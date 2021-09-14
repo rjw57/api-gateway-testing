@@ -14,11 +14,15 @@
     <script src="https://unpkg.com/@bity/oauth2-auth-code-pkce@2.13.0/index.umd.js"></script>
     <script>
       const { OAuth2AuthCodePKCE } = window.OAuth2AuthCodePKCE;
+      //const urlBase = 'https://devopsaccountrecoveryapigeestaging-eval-prod.apigee.net/';
+      //const clientId = 'GNASyAOjTzhzS5gQIC2SwGKPl914MFnE';
+      const urlBase = 'https://api.apps.cam.ac.uk/';
+      const clientId = 'H2zAJFSup4mire0as7delrDN6KCAv1mz';
 
       const oauth = new OAuth2AuthCodePKCE({
-        authorizationUrl: 'https://devopsaccountrecoveryapigeestaging-eval-prod.apigee.net/oauth2/v1/auth',
-        tokenUrl: 'https://devopsaccountrecoveryapigeestaging-eval-prod.apigee.net/oauth2/v1/token',
-        clientId: 'GNASyAOjTzhzS5gQIC2SwGKPl914MFnE',
+        authorizationUrl: `${urlBase}oauth2/v1/auth`,
+        tokenUrl: `${urlBase}oauth2/v1/token`,
+        clientId: clientId,
         scopes: ['openid', 'profile', 'email'],
         redirectUrl: location.href.replace(location.search, ''),
         onAccessTokenExpiry(refreshAccessToken) {
@@ -39,9 +43,9 @@
         console.log('Got new token', token);
         document.getElementById("result").textContent = "Obtained access token";
         fetch(
-          "https://devopsaccountrecoveryapigeestaging-eval-prod.apigee.net/echo/hello",
+          `${urlBase}echo/hello`,
           {
-            method: "POST", mode: "cors", credentials: "omit", headers: {
+            method: 'POST', mode: 'cors', credentials: 'omit', headers: {
               Authorization: `Bearer ${token.token.value}`,
             }, body: "test body",
           }
